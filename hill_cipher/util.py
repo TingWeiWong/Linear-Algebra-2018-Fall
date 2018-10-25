@@ -9,7 +9,7 @@ def inv_key(key):
     return np.around(np.mod(tem * modinv, 31)).astype(int)
 
 # cipher1 = "_CUKZFBMKDFJ.KO"
-cipher1_plain = [95,2,20,10,25,5,1,12,10,3,5,9,27,10,14]
+cipher1_plain = [26,2,20,10,25,5,1,12,10,3,5,9,27,10,14]
 cipher1 = np.reshape(cipher1_plain,(3,5))
 key1 = [0,18,2,6,6,20,24,0,15]
 key1 = np.reshape(key1,(3,3))
@@ -38,6 +38,18 @@ for i in range(3):
 		other_plain[i][j] = other_plain[i][j]%31
 print (other_plain)
 
+
+cipher_test1 = [21,9,22,20,21,28,4,3,8]
+cipher_test1 = np.reshape(cipher_test1,(3,3))
+key_test1 = [25,8,25,9,9,16,28,21,18]
+key_test1 = np.reshape(key_test1,(3,3))
+
+inverse_test_key = inv_key(key_test1)
+plain_test1 = np.matmul(inverse_test_key,cipher_test1)
+for i in range(3):
+	for j in range(3):
+		plain_test1[i][j] = plain_test1[i][j] %31
+print ("Test Plain = ",(plain_test1))
 
 
 
