@@ -5,17 +5,29 @@ def get_tran(g):
 	for i in range(n):
 		summation = 0
 		for j in range(n):
-			summation += g[i][j]
+			summation += g[j][i]
 		for j in range(n):
-			if summation != 0 :
-				g[i][j] = float(g[i][j]) / float(summation)
+			if summation !=0:
+				g[j][i] = float(g[j][i]) / float(summation)
 	result = g
-	return result
+	return result	
 test1 = [[0,0,0,0,1],
 		 [1,0,1,1,0],
 		 [1,0,0,0,1],
 		 [0,0,0,0,0],
 		 [0,1,0,0,0]]
-test1 = np.transpose(test1)
+for i in range(5):
+	for j in range(5):
+		test1[i][j] /= 2
+print ("After for loop = ",test1)
+test2 = np.transpose(test1)
 print (test1)
 print (get_tran(test1))
+
+x = [[1],
+	 [2]]
+y = [[3],
+	 [4]]
+print (np.add(x,y))
+print ((5-2)/2)
+
