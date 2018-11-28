@@ -17,11 +17,17 @@ def load(fname):
                 ret[i][str(j)] = 0
     ret = pd.DataFrame(ret).values
     return ret
-
+def transpose(m):
+    return np.transpose(m)
 def get_tran(g):
     # TODO
     n = len(g)
-    for i in range
+    transpose = transpose(g)
+    for i in range(n):
+        for j in range(n):
+            summation = 0
+            summation += transpose[i][j]
+
 
 def cal_rank(t, d = 0.85, max_iterations = 1000, alpha = 0.001):
     # TODO
