@@ -39,7 +39,8 @@ def cal_rank(t, d = 0.85, max_iterations = 1000, alpha = 0.001):
 	initial = []
 	for i in range(N):
 		R0.append([(1-d)/N])
-		initial.append([(1/N)])
+		initial.append([(0)])
+	initial[-1] = [10]
 	for i in range(max_iterations):
 		not_changed = initial
 		initial = np.add(R0,d*np.matmul(t,initial))
