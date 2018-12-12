@@ -75,7 +75,16 @@ def MSE(predict_Y, real_Y):
 	# loss = ?
 	loss = (np.square(predict_Y-real_Y)).mean()
 	return loss
-
+def plotting(train_set_loss, test_set_loss):
+	assert len(train_set_loss) == len(test_set_loss)
+	length = len(train_set_loss)
+	plt.figure(figsize = (12,8))
+	plt.xticks(range(1,len(train_set_loss)+1))
+	plt.plot(range(1,length+1),train_set_loss,'b',"train_set_loss")
+	plt.plot(range(1,length+1),test_set_loss,'b',"test_set_loss")
+	plt.legend()
+	plt.xlabel('N')
+	plt.ylabel('MSE loss')
 
 if __name__ == '__main__' :
 	N = 6
