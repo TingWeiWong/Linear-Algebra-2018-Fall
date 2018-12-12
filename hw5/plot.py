@@ -17,5 +17,7 @@ print(b)
 yhat = X.dot(b)
 # plot data and predictions
 pyplot.scatter(X, y)
-pyplot.plot(X, yhat, color='red')
+print ("X = ",X)
+print ("Y = ",yhat)
+# pyplot.plot(X, yhat, color='red')
 pyplot.show()
