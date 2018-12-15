@@ -98,7 +98,7 @@ if __name__ == '__main__' :
 	test_Y = test_Y.reshape((len(test_Y),1))
 	test_Y = np.array(test_Y)
 	print ("Test Y = ",test_Y)	
-	# pyplot.scatter(test_X, test_Y)
+	pyplot.scatter(test_X, test_Y)
 	# pyplot.plot(train_X, test_loss, color='red')
 	pyplot.show()
 	print("Test Loss = ",test_loss)
