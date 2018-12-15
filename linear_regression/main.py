@@ -68,7 +68,9 @@ class Linear_Regression(object):
 	def predict(self, test_X):
 		#TODO
 		#predict_Y = ...?
-		predict_Y = test_X.dot(self.W)
+		# predict_Y = test_X.dot(self.W)
+		# predict_Y = self.W.dot(test_X)
+		predict_Y = np.dot(test_X,self.W)
 		return predict_Y
 def MSE(predict_Y, real_Y):
 	#TODO :mean square error

@@ -63,12 +63,24 @@ class Linear_Regression(object):
 	def train(self, train_X, train_Y):
 		#TODO
 		#W = ?
-		W = inv(np.transpose(train_X).dot(train_X)).dot(np.transpose(train_X)).dot(train_Y)
-		self.W = W #save W for later prediction
+		mean_x = np.mean(train_X)
+		mean_y = np.mean(train_Y)
+		m = len(train_X)
+
+		# Using the formula to calculate b1 and b2
+		numer = 0
+		denom = 0
+		for i in range(m):
+			numer += (train_X[i] - mean_x) * (train_Y[i] - mean_y)
+			denom += (train_X[i] - mean_x) ** 2
+		b1 = numer / denom
+		b0 = mean_y - (b1 * mean_x)
+		self.W = b1 #save W for later prediction
+		self.bias = b0
 	def predict(self, test_X):
 		#TODO
 		#predict_Y = ...?
-		predict_Y = test_X.dot(self.W)
+		predict_Y = self.W*test_X+self.bias
 		return predict_Y
 def MSE(predict_Y, real_Y):
 	#TODO :mean square error
@@ -94,11 +106,28 @@ if __name__ == '__main__' :
 	test_X, test_Y = read_TestData('test.csv', N=N)
 	predict_Y = model.predict(test_X)
 	test_loss = MSE(predict_Y, test_Y)
-	print ("Test X = ",test_X)
-	test_Y = test_Y.reshape((len(test_Y),1))
-	test_Y = np.array(test_Y)
-	print ("Test Y = ",test_Y)	
-	# pyplot.scatter(test_X, test_Y)
-	# pyplot.plot(train_X, test_loss, color='red')
-	pyplot.show()
-	print("Test Loss = ",test_loss)
+
+	alphas = np.logspace(-5, 1, 60)
+	train_errors = list()
+	test_errors = list()
+	for alpha in alphas:
+		enet.set_params(alpha=alpha)
+		enet.fit(X_train, y_train)
+		train_errors.append(enet.score(X_train, y_train))
+		test_errors.append(enet.score(X_test, y_test))
+
+		i_alpha_optim = np.argmax(test_errors)
+		alpha_optim = alphas[i_alpha_optim]
+		print("Optimal regularization parameter : %s" % alpha_optim)
+
+		# Estimate the coef_ on full data with optimal regularization parameter
+		enet.set_params(alpha=alpha_optim)
+		coef_ = enet.fit(X, y).coef_
+
+	# #############################################################################
+	# Plot results functions
+	plt.subplot(2, 1, 1)
+	plt.semilogx(alphas, train_errors, label='Train')
+	plt.semilogx(alphas, test_errors, label='Test')
+	plt.vlines(alpha_optim, plt.ylim()[0], np.max(test_errors), color='k',
+			   linewidth=3, label='Optimum on test')
