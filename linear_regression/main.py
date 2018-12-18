@@ -3,6 +3,7 @@ import numpy as np
 from numpy import array
 from numpy.linalg import inv
 from matplotlib import pyplot
+import matplotlib.pyplot as plt
 
 attrs = ['AMB', 'CH4', 'CO', 'NMHC', 'NO', 'NO2',
 		'NOx', 'O3', 'PM10', 'PM2.5', 'RAINFALL', 'RH',
@@ -65,6 +66,9 @@ class Linear_Regression(object):
 		#W = ?
 		W = inv(np.transpose(train_X).dot(train_X)).dot(np.transpose(train_X)).dot(train_Y)
 		self.W = W #save W for later prediction
+		predict_Y = self.predict(train_X)
+		loss = MSE(predict_Y,train_Y)
+		return loss
 	def predict(self, test_X):
 		#TODO
 		#predict_Y = ...?
@@ -90,17 +94,23 @@ def plotting(train_set_loss, test_set_loss):
 
 if __name__ == '__main__' :
 	N = 6
-	train_X, train_Y = read_TrainData('train.csv', N=N)
-	model = Linear_Regression()
-	model.train(train_X, train_Y)
-	test_X, test_Y = read_TestData('test.csv', N=N)
-	predict_Y = model.predict(test_X)
-	test_loss = MSE(predict_Y, test_Y)
-	print ("Test X = ",test_X)
-	test_Y = test_Y.reshape((len(test_Y),1))
-	test_Y = np.array(test_Y)
-	print ("Test Y = ",test_Y)	
-	# pyplot.scatter(test_X, test_Y)
-	# pyplot.plot(train_X, test_loss, color='red')
-	pyplot.show()
-	print("Test Loss = ",test_loss)
+	training = []
+	testing = []
+	for i in range(48):
+		N = i+1
+		train_X, train_Y = read_TrainData('train.csv', N=N)
+		model = Linear_Regression()
+		train_loss = model.train(train_X, train_Y)
+		test_X, test_Y = read_TestData('test.csv', N=N)
+		predict_Y = model.predict(test_X)
+		test_loss = MSE(predict_Y, test_Y)
+		# print ("Test X = ",test_X)
+		test_Y = test_Y.reshape((len(test_Y),1))
+		test_Y = np.array(test_Y)
+		# print ("Test Y = ",test_Y)	
+		# pyplot.scatter(test_X, test_Y)
+		# pyplot.plot(train_X, test_loss, color='red')
+		print("Test Loss = ",test_loss)
+		training.append(train_loss)
+		testing.append(test_loss)
+	plotting(training,testing)
