@@ -85,9 +85,9 @@ def plotting(train_set_loss, test_set_loss):
 	assert len(train_set_loss) == len(test_set_loss)
 	length = len(train_set_loss)
 	plt.figure(figsize = (12,8))
-	plt.xticks(range(1,len(train_set_loss)+1))
-	plt.plot(range(1,length+1),train_set_loss,'b',"train_set_loss")
-	plt.plot(range(1,length+1),test_set_loss,'b',"test_set_loss")
+	plt.xticks(range(1,length+1))
+	plt.plot(range(1,length+1),train_set_loss,'b',label = "train_set_loss")
+	plt.plot(range(1,length+1),test_set_loss,'r',label = "test_set_loss")
 	plt.legend()
 	plt.xlabel('N')
 	plt.ylabel('MSE loss')
@@ -97,7 +97,7 @@ if __name__ == '__main__' :
 	N = 6
 	training = []
 	testing = []
-	for i in range(10):
+	for i in range(48):
 		N = i+1
 		train_X, train_Y = read_TrainData('train.csv', N=N)
 		model = Linear_Regression()
@@ -105,10 +105,6 @@ if __name__ == '__main__' :
 		test_X, test_Y = read_TestData('test.csv', N=N)
 		predict_Y = model.predict(test_X)
 		test_loss = MSE(predict_Y, test_Y)
-		# print ("Test X = ",test_X)
-		# print ("Test Y = ",test_Y)	
-		# pyplot.scatter(test_X, test_Y)
-		# pyplot.plot(train_X, test_loss, color='red')
 		print("Test Loss = ",test_loss)
 		training.append(train_loss)
 		testing.append(test_loss)
