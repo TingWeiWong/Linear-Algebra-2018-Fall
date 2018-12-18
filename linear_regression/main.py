@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from numpy import array
 from numpy.linalg import inv
-from matplotlib import pyplot
+import matplotlib
 import matplotlib.pyplot as plt
 
 attrs = ['AMB', 'CH4', 'CO', 'NMHC', 'NO', 'NO2',
@@ -60,7 +60,7 @@ def read_TestData(filename, N):
 
 class Linear_Regression(object):
 	def __init__(self):
-		pass
+		self.W = np.full((1,109),0.1)
 	def train(self, train_X, train_Y):
 		#TODO
 		#W = ?
@@ -91,12 +91,13 @@ def plotting(train_set_loss, test_set_loss):
 	plt.legend()
 	plt.xlabel('N')
 	plt.ylabel('MSE loss')
+	plt.show()
 
 if __name__ == '__main__' :
 	N = 6
 	training = []
 	testing = []
-	for i in range(48):
+	for i in range(10):
 		N = i+1
 		train_X, train_Y = read_TrainData('train.csv', N=N)
 		model = Linear_Regression()
@@ -105,8 +106,6 @@ if __name__ == '__main__' :
 		predict_Y = model.predict(test_X)
 		test_loss = MSE(predict_Y, test_Y)
 		# print ("Test X = ",test_X)
-		test_Y = test_Y.reshape((len(test_Y),1))
-		test_Y = np.array(test_Y)
 		# print ("Test Y = ",test_Y)	
 		# pyplot.scatter(test_X, test_Y)
 		# pyplot.plot(train_X, test_loss, color='red')
