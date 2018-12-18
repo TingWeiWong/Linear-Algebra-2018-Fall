@@ -64,8 +64,8 @@ class Linear_Regression(object):
 	def train(self, train_X, train_Y):
 		#TODO
 		#W = ?
-		# W = inv(np.transpose(train_X).dot(train_X)).dot(np.transpose(train_X)).dot(train_Y)
-		W = np.transpose(train_X).dot(train_X).dot(np.transpose(train_X)).dot(train_Y)
+		W = inv(np.transpose(train_X).dot(train_X)).dot(np.transpose(train_X)).dot(train_Y)
+		# W = np.transpose(train_X).dot(train_X).dot(np.transpose(train_X)).dot(train_Y)
 		self.W = W #save W for later prediction
 		predict_Y = self.predict(train_X)
 		loss = MSE(predict_Y,train_Y)
